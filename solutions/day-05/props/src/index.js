@@ -56,8 +56,7 @@ const hexaColor = () => {
   return "#" + color;
 };
 
-const HexaColor = () => {
-  const hex = hexaColor();
+const HexaColor = ({ hex }) => {
   const hexStyle = {
     borderRadius: 4,
     textAlign: "center",
@@ -75,41 +74,31 @@ const HexaColor = () => {
 
 const HexColors = () => (
   <div className="hexColors">
-    <HexaColor />
-    <HexaColor />
-    <HexaColor />
-    <HexaColor />
-    <HexaColor />
+    <HexaColor hex={hexaColor()} />
+    <HexaColor hex={hexaColor()} />
+    <HexaColor hex={hexaColor()} />
+    <HexaColor hex={hexaColor()} />
+    <HexaColor hex={hexaColor()} />
   </div>
 );
 
 // exercise 3.2
-
-const user = {
-  name: "Thien Dang",
-  img: thienAvt,
-  title: "Web developer, Danang",
-  skills: ["HTML", "CSS", "JS", "Git", "MySQL", "ReactJS"],
-  joinTime: "April 20, 2022",
-};
-
-const UserInfo = () => (
+const UserInfo = ({ user: { name, img, title } }) => (
   <div className="info-container">
     <div className="user-info">
-      <img className="user-img" src={user.img} alt="user img" />
+      <img className="user-img" src={img} alt="user img" />
       <h1 className="user-name">
-        {user.name}{" "}
-        <FontAwesomeIcon className="check-icon" icon={faCircleCheck} />
+        {name} <FontAwesomeIcon className="check-icon" icon={faCircleCheck} />
       </h1>
-      <p className="title">{user.title}</p>
+      <p className="title">{title}</p>
     </div>
   </div>
 );
-const UserSkills = () => (
+const UserSkills = ({ user: { skills } }) => (
   <div>
     <h2 className="skill-title">SKILLS</h2>
     <div className="skills">
-      {user.skills.map((skill, index) => (
+      {skills.map((skill, index) => (
         <span key={index} className="user-skill">
           {skill}
         </span>
@@ -118,34 +107,45 @@ const UserSkills = () => (
   </div>
 );
 
-const UserJoinTime = () => (
+const UserJoinTime = ({ user: { joinTime } }) => (
   <p className="user-join-time">
     <FontAwesomeIcon className="clock-icon" icon={faClock} />
-    {user.joinTime}
+    {joinTime}
   </p>
 );
-const Card = () => (
+const Card = ({ user }) => (
   <div className="exercise-32">
     <div className="card">
-      <UserInfo />
-      <UserSkills />
-      <UserJoinTime />
+      <UserInfo user={user} />
+      <UserSkills user={user} />
+      <UserJoinTime user={user} />
     </div>
   </div>
 );
 
-const App = () => (
-  <React.Fragment>
-    <h2 className="exercise-heading">exercise 2.1</h2>
-    <TechImages techsImage={techsImage} />
-    <h2 className="exercise-heading">exercise 2.2</h2>
-    <Form />
-    <h2 className="exercise-heading">exercise 3.1</h2>
-    <HexColors />
-    <h2 className="exercise-heading">exercise 3.2</h2>
-    <Card />
-  </React.Fragment>
-);
+const App = () => {
+  const user = {
+    name: "Thien Dang",
+    img: thienAvt,
+    title: "Web developer, Danang",
+    skills: ["HTML", "CSS", "JS", "Git", "MySQL", "ReactJS"],
+    joinTime: "April 20, 2022",
+  };
+
+  return (
+    <React.Fragment>
+      <h2 className="exercise-heading">exercise 2.1</h2>
+      <TechImages techsImage={techsImage} />
+      <h2 className="exercise-heading">exercise 2.2</h2>
+      <Form />
+      <h2 className="exercise-heading">exercise 3.1</h2>
+      <HexColors />
+      <h2 className="exercise-heading">exercise 3.2</h2>
+      <Card user={user} />
+    </React.Fragment>
+  );
+};
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
